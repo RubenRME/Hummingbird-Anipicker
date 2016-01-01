@@ -2,7 +2,8 @@
 <!DOCTPYE html>
 <html>
 	<head>
-		<title>HB Anipicker</title>
+		<title>HB Anipicker | RME</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
@@ -17,7 +18,12 @@
 		<div class="body">
 			<?php 
 				if(getAPI($_GET['user']) == false) {
-					echo '<h1 class="big text center">No Username Filled in</h1>';
+					if(!isset($_GET['user'])) {
+						echo '<h1 class="big text center">No Username Filled in</h1>';
+					}else{
+						echo '<h1 class="big text center">Unexisting username</h1>';
+						echo '<h2 class="medium text center">Hummingbird responds with error 404</h2>';
+					}
 				} else {
 					getRandomAnime();
 				}

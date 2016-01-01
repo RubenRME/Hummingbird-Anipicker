@@ -4,22 +4,20 @@
 if(!isset($_GET['user'])) { $_GET['user'] = ""; }
 if(!isset($_GET['force-to-watch'])) { $_GET['force-to-watch'] = true; }
 
-$json = "https://hummingbird.me/api/v1/users/" . $_GET['user'];
-
 /* 
  * Check if USERNAME if valid
  * If not: return false
  * If yes: return true
  */
 function getAPI($username) {
-	global $json;
+	$user = "https://hummingbird.me/api/v1/users/" . $_GET['user'];
 	
-	$library = @file_get_contents($json);
+	$library = @file_get_contents($user);
 		
-	if($library == FALSE) {
-		return FALSE;
+	if($library == false) {
+		return false;
 	} else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -27,19 +25,20 @@ function getAPI($username) {
  * Get a random anime from USERNAME's plan-to-watch
  */
 function getRandomAnime() {
-	$currentlywatching = "https://hummingbird.me/api/v1/users/" . $_GET['user'] . "/library?status=currently-watching";
-	$plantowatch = "https://hummingbird.me/api/v1/users/" . $_GET['user'] . "/library?status=plan-to-watch";
+
+	$currentlywatching = json_decode(file_get_contents("https://hummingbird.me/api/v1/users/" . $_GET['user'] . "/library?status=currently-watching"), true);
+	$plantowatch = json_decode(file_get_contents("https://hummingbird.me/api/v1/users/" . $_GET['user'] . "/library?status=plan-to-watch"), true);
 	
 	//Check if force-to-watch is on
 	if($_GET['force-to-watch'] == true) {
 		// Check if currently-watching containst more than 5 items, if so a random anime from currently-watching should be selected
 		if(count($currentlywatching) > 5) {
-			$selection = json_decode(file_get_contents($currentlywatching), true);
+			$selection = $currentlywatching;
 		} else {
-			$selection = json_decode(file_get_contents($plantowatch), true);
+			$selection = $plantowatch;
 		}
 	} else {
-		$selection = json_decode(file_get_contents($plantowatch), true);
+		$selection = $plantowatch;
 	}
 	
 	$random = $selection[array_rand($selection)];
@@ -51,7 +50,6 @@ function getRandomAnime() {
 	$random_title = $random['anime']['title'];
 	$random_alt_title = $random['anime']['alternate_title'];
 	$random_link = $random['anime']['url'];
-	
 	echo "<h1 class='big text center'><a href='$random_link' target='_blank'>$random_title</a></h1>";
 	echo "<h2 class='medium text center'>$random_alt_title</h2>";
 }
