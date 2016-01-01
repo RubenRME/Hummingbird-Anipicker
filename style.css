@@ -3,12 +3,19 @@
 body {
 	margin: 0;
 }
+a {
+	color: black;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
 .header {
 	background: #28bf5c;
 	color: white;
 }
 .huge.text {
-	padding-top: 4em;
+	padding-top: 3.5em;
 	font-size: 72pt;
 	font-family: Anton;
 }
@@ -49,8 +56,6 @@ input[type="text"]:focus,
 input[type="text"].focus {
 	border-bottom: solid 2px #969696;
 }
-
-
 /* 
  * I suck at checkbox styling, if you want to create some: feel free to!
  */
