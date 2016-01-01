@@ -2,9 +2,9 @@
 
 // Get rid of stupid errors when GET is not set
 if(!isset($_GET['user'])) { $_GET['user'] = ""; }
-if(!isset($_GET['force-to-watch'])) { $_GET['force-to-watch'] = false; }
+if(!isset($_GET['force-to-watch'])) { $_GET['force-to-watch'] = true; }
 
-$json = "https://hummingbird.me/api/v1/users/" . $_GET['user'] . "/library";
+$json = "https://hummingbird.me/api/v1/users/" . $_GET['user'];
 
 /* 
  * Check if USERNAME if valid
@@ -45,11 +45,13 @@ function getRandomAnime() {
 	$random = $selection[array_rand($selection)];
 	
 	// Loop to make sure anime is already airing
-	while($random['anime']['started_airing'] == NULL) {
+	while($random['anime']['status'] == "Not Yet Aired") {
 		$random = $selection[array_rand($selection)];
 	}
 	$random_title = $random['anime']['title'];
 	$random_alt_title = $random['anime']['alternate_title'];
-	echo "<h1 class='big text center'>$random_title</h1>";
+	$random_link = $random['anime']['url'];
+	
+	echo "<h1 class='big text center'><a href='$random_link' target='_blank'>$random_title</a></h1>";
 	echo "<h2 class='medium text center'>$random_alt_title</h2>";
 }

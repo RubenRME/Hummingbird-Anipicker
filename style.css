@@ -3,12 +3,19 @@
 body {
 	margin: 0;
 }
+a {
+	color: black;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
 .header {
 	background: #28bf5c;
 	color: white;
 }
 .huge.text {
-	padding-top: 4em;
+	padding-top: 3.5em;
 	font-size: 72pt;
 	font-family: Anton;
 }
